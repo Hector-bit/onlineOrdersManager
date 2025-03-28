@@ -1,4 +1,5 @@
 import { LOCATION_CREDS } from "./merchantConstants";
+import { ResponseOrderById } from "./merchantAPITypes";
 
 const getTodayTimestamps = () => {
   const now = new Date();
@@ -14,13 +15,13 @@ const getTodayTimestamps = () => {
 export const fetchOrdersByMid = async(mid: string) => {
   const { startTime, endTime } = getTodayTimestamps();
   const localCreds = LOCATION_CREDS[mid]
-  console.log('local: ', localCreds)
+  // console.log('local: ', localCreds)
 
   const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders`
   const requestUrlFiltered = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders?filter=createdTime>${startTime}&filter=createdTime<${endTime}`
 
   try {
-    const response = await fetch(requestUrl, {
+    const response = await fetch(requestUrlFiltered, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +34,7 @@ export const fetchOrdersByMid = async(mid: string) => {
     }
     
     let orderData = await response.json()
-    console.log('order data: ', orderData)
+    console.log('orders list: ', orderData)
     return orderData
 
   } catch (error) {
@@ -42,7 +43,54 @@ export const fetchOrdersByMid = async(mid: string) => {
 }
 
 
-export const fetchOrderById = () => {
-  const requestUrl = ``
+export const fetchOrderById = async(mid: string, orderId: string): Promise<ResponseOrderById | undefined> => {
+  const localCreds = LOCATION_CREDS[mid]
+  const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${mid}/orders/${orderId}`
 
+  try{
+    const response = await fetch(requestUrl, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localCreds.HOSTED_TOKEN}`,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // console.log('order data: ', response)
+
+    let orderData = await response.json()
+
+    return orderData
+
+  } catch(error) {
+    console.error('Could not fetch order data: ', error)
+    return undefined
+  }
+
+}
+
+export const fetchCustomerInfoById = async(mid: string, customerId: string) => {
+  const localCreds = LOCATION_CREDS[mid]
+  const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${mid}/customers/${customerId}`
+
+  try {
+    const response = await fetch(requestUrl, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localCreds.HOSTED_TOKEN}`,
+      },
+    })
+
+    let customerData = await response.json()
+    return customerData
+
+  } catch( error ) {
+    console.error('error fetching customer info: ', error)
+    return undefined
+  }
 }

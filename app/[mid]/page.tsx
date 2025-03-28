@@ -1,6 +1,8 @@
 import { LOCATION_CREDS } from "@/utils/merchantConstants";
+import CustomerInfo from "../components/CustomerInfo";
 import { fetchOrdersByMid } from "@/utils/merchantFunctions";
 import Link from "next/link";
+import { getTimeToString } from "@/utils/helperFunctions";
 
 export default async function midPage (props: { params: Promise<{mid: string}> }) {
   //my params
@@ -11,7 +13,7 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
   const localInfo = LOCATION_CREDS[mid]
   const orders = await fetchOrdersByMid(mid)
 
-  console.log('ELEMETNST: ', orders.elements)
+  console.log('elements from orders data: ', orders.elements)
   
 
   return (
@@ -22,20 +24,20 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
           // const localOrders = order
 
           return (
-            <Link href={`/${mid}/orders/${order.id}`}>
+            <Link key={`${index}-order-${order.id}`}  href={`/${mid}/order/${order.id}`}>
               <div 
-                key={`${index}-order-${order.id}`} 
-                className="border-2 rounded-xl border-white p-4"
+                className="flex flex-row border rounded-xl border-black bg-gray-50 p-4"
 
               >
+                <div>
                   <div>order Id: {order.id}</div>
-                  {/* <div>order customers: {order.customers[0]}</div>
-                  */}
-                  
-                  {/* <div>order employee: {order.employee}</div> */}
-                  {/* <div>order Id: {order.id}</div>
-                  <div>order Id: {order.id}</div>
-                  <div>order Id: {order.id}</div> */}
+                  <div>created Time: {getTimeToString(order.createdTime)}</div>
+                  {order.employee && 
+                      <div key={order.employee.id}>
+                        <div>employee Id: {order.employee.id}</div>
+                      </div>
+                  }
+                </div>
               </div>
 
             </Link>
