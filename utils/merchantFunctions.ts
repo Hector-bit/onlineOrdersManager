@@ -1,5 +1,5 @@
 import { LOCATION_CREDS } from "./merchantConstants";
-import { ResponseCustomerById, ResponseOrderById } from "./merchantAPITypes";
+import { ResponseCustomerById, ResponseLineItemsByOrderId, ResponseOrderById, ResponseOrdersByMID } from "./merchantAPITypes";
 
 const getTodayTimestamps = () => {
   const now = new Date();
@@ -12,12 +12,12 @@ const getTodayTimestamps = () => {
   return { startTime, endTime };
 };
 
-export const fetchOrdersByMid = async(mid: string) => {
+export const fetchOrdersByMid = async(mid: string):Promise<ResponseOrdersByMID | undefined> => {
   const { startTime, endTime } = getTodayTimestamps();
   const localCreds = LOCATION_CREDS[mid]
   // console.log('local: ', localCreds)
 
-  const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders`
+  // const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders`
   const requestUrlFiltered = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders?filter=createdTime>${startTime}&filter=createdTime<${endTime}`
 
   try {
@@ -88,9 +88,29 @@ export const fetchCustomerInfoById = async(mid: string, customerId: string):Prom
 
     let customerData = await response.json()
     return customerData
-
   } catch( error ) {
     console.error('error fetching customer info: ', error)
+    return undefined
+  }
+}
+
+export const fetchLineItemsByOrderId = async(mid: string, orderId: string):Promise<ResponseLineItemsByOrderId | undefined> => {
+  const localCreds = LOCATION_CREDS[mid]
+  const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${mid}/orders/${orderId}/line_items`
+
+  try {
+    const response = await fetch(requestUrl, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localCreds.HOSTED_TOKEN}`,
+      },
+    })
+
+    let lineItemData = await response.json()
+    return lineItemData
+  } catch(error) {
+    console.error('error fetching line items: ', error)
     return undefined
   }
 }

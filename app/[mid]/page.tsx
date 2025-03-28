@@ -13,7 +13,6 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
   //data to use
   const localInfo = LOCATION_CREDS[mid]
   const orders = await fetchOrdersByMid(mid)
-  let customer = orders.elements.customers ? await fetchCustomerInfoById(mid, orders.elements.customers.elements[0].id) : undefined
 
   // if(orders.customers){
   //   customer = await fetchCustomerInfoById(mid, orders.customers[0].id)
@@ -21,7 +20,7 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
 
 
   console.log('elements from orders data: ', orders)
-  console.log('customers from order', customer)
+  // console.log('customers from order', customer)
   
 
   return (
@@ -34,24 +33,16 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
 
       <div>Location name: {localInfo.LOCATIONNAME}</div>
 
-      <div className="flex flex-row">
-        <div className="grid grid-rows-3 gap-3">
-          {orders.elements.map((order:any, index: number) => {
+      <div className="flex flex-col gap-4">
+          {orders && orders.elements.map((order:any, index: number) => {
             // const localOrders = order
 
             return (
               <div 
                 key={`${index}-order-${order.id}`} 
-                className="flex flex-row border rounded-xl border-black bg-gray-50 p-4"
+                className="flex flex-row gap-4 border rounded-xl border-black bg-gray-50 p-4"
               >
                 <div>
-                  <Link 
-                    key={`${index}-order-${order.id}`} 
-                    href={`/${mid}/order/${order.id}`}
-                    className="p-2 border border-black mb-2 rounded-xl"
-                  >
-                    Check Order 
-                  </Link>
                   <div>order Id: {order.id}</div>
                   <div>created Time: {getTimeToString(order.createdTime)}</div>
                   {order.employee && 
@@ -65,10 +56,16 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
                     )
                   })}
                 </div>
+                <Link 
+                  key={`${index}-order-${order.id}`} 
+                  href={`/${mid}/order/${order.id}`}
+                  className="flex self-justify-end items-center p-2 border border-black mb-2 rounded-xl"
+                >
+                  Check Order 
+                </Link>
               </div>
             )
           })}
-        </div>
         {/* <CustomerInfo mid={""} customerId={""}/> */}
       </div>
     </div>
