@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { locationParams } from "@/utils/merchantConstants";
 import Link from "next/link";
 

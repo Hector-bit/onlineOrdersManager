@@ -1,6 +1,5 @@
 import { LOCATION_CREDS } from "@/utils/merchantConstants";
-import CustomerInfo from "../components/CustomerInfo";
-import { fetchCustomerInfoById, fetchOrdersByMid } from "@/utils/merchantFunctions";
+import { fetchOrdersByMid } from "@/utils/merchantFunctions";
 import Link from "next/link";
 import { getTimeToString } from "@/utils/helperFunctions";
 import { CustomerType } from "@/utils/merchantAPITypes";
@@ -34,7 +33,7 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
       <div>Location name: {localInfo.LOCATIONNAME}</div>
 
       <div className="flex flex-col gap-4">
-          {orders && orders.elements.map((order:any, index: number) => {
+          {orders && orders.elements.map((order, index: number) => {
             // const localOrders = order
 
             return (

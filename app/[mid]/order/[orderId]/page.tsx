@@ -1,5 +1,5 @@
 import { LOCATION_CREDS } from "@/utils/merchantConstants";
-import { fetchOrdersByMid, fetchOrderById, fetchLineItemsByOrderId } from "@/utils/merchantFunctions";
+import { fetchOrderById, fetchLineItemsByOrderId } from "@/utils/merchantFunctions";
 import Link from "next/link";
 import CustomerInfo from "@/app/components/CustomerInfo";
 
@@ -27,7 +27,7 @@ export default async function orderPage (props: { params: Promise<{mid: string, 
       <div className="flex flex-col border-2 border-black rounded-xl p-3">
         <div>Order id: {orderInfo.id}</div>
         <div>{createdDate}</div>
-        {orderInfo.customers && orderInfo.customers.elements.map((customer:any, index: number) => {
+        {orderInfo.customers && orderInfo.customers.elements.map((customer, index: number) => {
           return (
             <div key={`${index}-${orderInfo.id}`}>
               <div key={customer.id}>
@@ -46,8 +46,8 @@ export default async function orderPage (props: { params: Promise<{mid: string, 
             return (
               <div key={lineItem.id} className="border-b border-black p-4">
                 <div>Order: {lineItem.name}</div>
-                <div>Note: {lineItem?.note}</div>
-                <div>Price: {lineItem?.price}</div>
+                <div>Note: {lineItem.note ? lineItem.note : 'N/A'}</div>
+                <div>Price: {lineItem.price ? lineItem.price : 'N/A'}</div>
               </div>
             )
           })

@@ -6,6 +6,10 @@ export type LineItemType = {
   isRevenue: boolean
   name: string
   orderClientCreatedTime: number
+
+  price?: number
+  unitQty?: number
+  note?: string
 }
 
 export type CustomerType = {
