@@ -17,8 +17,11 @@ export default async function orderPage (props: { params: Promise<{mid: string, 
   
 
   return ( orderInfo &&
-    <div className="">
-      <div>Location name: {localInfo.LOCATIONNAME}</div>
+    <div className="flex flex-col gap-4">
+      <Link href={`/${mid}`} className="">
+        <div className="flex justify-center p-4 bg-gray-50 rounded-xl border border-black w-20">Back</div>
+      </Link>
+      <div className="text-lg">Merchant: {localInfo.LOCATIONNAME}</div>
       <div className="flex flex-col border-2 border-black rounded-xl p-3">
         <div>{orderInfo.id}</div>
         <div>{createdDate}</div>

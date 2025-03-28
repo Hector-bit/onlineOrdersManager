@@ -1,5 +1,5 @@
 import { LOCATION_CREDS } from "./merchantConstants";
-import { ResponseOrderById } from "./merchantAPITypes";
+import { ResponseCustomerById, ResponseOrderById } from "./merchantAPITypes";
 
 const getTodayTimestamps = () => {
   const now = new Date();
@@ -73,7 +73,7 @@ export const fetchOrderById = async(mid: string, orderId: string): Promise<Respo
 
 }
 
-export const fetchCustomerInfoById = async(mid: string, customerId: string) => {
+export const fetchCustomerInfoById = async(mid: string, customerId: string):Promise<ResponseCustomerById | undefined> => {
   const localCreds = LOCATION_CREDS[mid]
   const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${mid}/customers/${customerId}`
 

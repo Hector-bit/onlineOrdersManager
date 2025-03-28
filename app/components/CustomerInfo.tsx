@@ -9,11 +9,13 @@ const CustomerInfo = async(props: { mid: string, customerId: string }) => {
   console.log('customer info', customerInfo)
 
   return (
-    <div>
-      <div>Firstname: {customerInfo.firstname}</div>
-      <div>Lastname: {customerInfo.lastname}</div>
-      <div>Customer id: {customerInfo.id}</div>
-    </div>
+    customerInfo && (
+      <div>
+        <div>Firstname: {customerInfo.firstName}</div>
+        <div>Lastname: {customerInfo.lastName}</div>
+        {/* <div>Customer id: {customerInfo.id}</div> */}
+      </div>
+    )
   )
 }
 
