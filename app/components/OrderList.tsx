@@ -10,7 +10,6 @@ const OrderList = async({mid, query}: {mid: string, query: string} ) => {
 
   return (
     <div className="flex flex-col gap-4">
-    <div>query: | {query} |</div>
     {orders && orders.elements.map((order, index: number) => {
       // const localOrders = order
 

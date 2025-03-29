@@ -11,7 +11,7 @@ export default async function midPage (props: { params: Promise<{mid: string }>,
   const mid = params.mid
   const queryVal = searchParams?.query || '';
 
-  console.log('does it update here: ', queryVal)
+  // console.log('does it update here: ', queryVal)
 
   //data to use
   const localInfo = LOCATION_CREDS[mid]

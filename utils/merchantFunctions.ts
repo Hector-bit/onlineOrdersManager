@@ -42,11 +42,11 @@ export const fetchOrdersByMid = async(mid: string, query?: string):Promise<Respo
 
     if(query){
       const matchedList = orderData.elements.filter((order:any) => order.id.includes(query))
-      console.log('matched lista', matchedList.length)
+      // console.log('matched lista', matchedList.length)
       orderData.elements = matchedList
     }
     
-    console.log('orders list: ', orderData.elements.length)
+    // console.log('orders list: ', orderData.elements.length)
     return orderData
 
   } catch (error) {
