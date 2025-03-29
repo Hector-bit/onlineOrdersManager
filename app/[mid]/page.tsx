@@ -36,7 +36,7 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
             return (
               <div 
                 key={`${index}-order-${order.id}`} 
-                className="flex flex-row gap-4 border rounded-xl border-black bg-gray-50 p-4"
+                className="flex flex-col gap-4 border rounded-xl border-black bg-gray-50 p-4"
               >
                 {/* ORDER DETAILS */}
                 <div className="grow text-xl">
@@ -58,7 +58,7 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
                 <Link 
                   key={`${index}-order-${order.id}`} 
                   href={`/${mid}/order/${order.id}`}
-                  className="flex flex-col self-justify-end justify-center items-center text-md p-2 border border-black mb-2 rounded-xl"
+                  className="flex flex-col self-justify-end justify-center items-center w-40 text-md p-2 border border-black mb-2 rounded-xl"
                 >
                   <div>VER MAS</div> 
                   <div>SEE MORE</div> 

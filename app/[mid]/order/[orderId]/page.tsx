@@ -29,7 +29,7 @@ export default async function orderPage (props: { params: Promise<{mid: string, 
   
 
   return ( orderInfo &&
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 text-xl">
 
       {/* BACK BUTTON */}
       <Link href={`/${mid}`} className="">
@@ -78,5 +78,3 @@ export default async function orderPage (props: { params: Promise<{mid: string, 
     </div>
   )
 }
-
--2
