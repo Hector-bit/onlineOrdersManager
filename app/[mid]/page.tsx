@@ -38,7 +38,8 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
                 key={`${index}-order-${order.id}`} 
                 className="flex flex-row gap-4 border rounded-xl border-black bg-gray-50 p-4"
               >
-                <div>
+                {/* ORDER DETAILS */}
+                <div className="grow text-xl">
                   <div>order Id: {order.id}</div>
                   <div>created Time: {getTimeToString(order.createdTime)}</div>
                   {order.employee && 
@@ -52,12 +53,15 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
                     )
                   })}
                 </div>
+
+                {/* SEE MORE BUTTON */}
                 <Link 
                   key={`${index}-order-${order.id}`} 
                   href={`/${mid}/order/${order.id}`}
-                  className="flex self-justify-end items-center p-2 border border-black mb-2 rounded-xl"
+                  className="flex flex-col self-justify-end justify-center items-center text-md p-2 border border-black mb-2 rounded-xl"
                 >
-                  Check Order 
+                  <div>VER MAS</div> 
+                  <div>SEE MORE</div> 
                 </Link>
               </div>
             )
