@@ -1,17 +1,40 @@
 import { LOCATION_CREDS } from "@/utils/merchantConstants";
 import { fetchOrdersByMid } from "@/utils/merchantFunctions";
 import Link from "next/link";
-import { getTimeToString } from "@/utils/helperFunctions";
-import { CustomerType } from "@/utils/merchantAPITypes";
+import Search from "../components/Search";
+import OrderList from "../components/OrderList";
 
-export default async function midPage (props: { params: Promise<{mid: string}> }) {
+export default async function midPage (props: { params: Promise<{mid: string }>, searchParams: Promise<{query?: string}> }) {
   //my params
   const params = await props.params;
+  const searchParams = await props.searchParams;
   const mid = params.mid
+  const queryVal = searchParams?.query || '';
+
+  console.log('does it update here: ', queryVal)
 
   //data to use
   const localInfo = LOCATION_CREDS[mid]
-  const orders = await fetchOrdersByMid(mid)
+
+  let orders = await fetchOrdersByMid(mid, queryVal)
+
+  // const handleSearch = async(term:string) => {
+  //   clearTimeout(timer); // Clear previous timer
+  //   timer = setTimeout(() => func(...args), delay);
+  //   console.log(`Searching... ${term}`);
+   
+  //   // const params = new URLSearchParams(searchParams);
+  //   // params.set('page', '1')
+  //   // if (term) {
+  //   //   params.set('query', term);
+  //   // } else {
+  //   //   params.delete('query');
+  //   // }
+  //   // replace(`${pathname}?${params.toString()}`);
+  //   orders = await fetchOrdersByMid(mid)
+  // }, 300);
+
+  // orders = await fetchOrdersByMid(mid, query)
 
   console.log('elements from orders data: ', orders)
 
@@ -27,48 +50,15 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
       </div>
 
       <div className="text-xl font-bold">Location: {localInfo.LOCATIONNAME}</div>
+      <div className="text-xl font-bold">Order List / Lista de Ordenes: {orders?.elements.length}</div>
+
+      <Search query={"order id..."}/>
 
       {/* ORDER LIST */}
       <div className="flex flex-col gap-4">
-          {orders && orders.elements.map((order, index: number) => {
-            // const localOrders = order
-
-            return (
-              <div 
-                key={`${index}-order-${order.id}`} 
-                className="flex flex-col gap-4 border rounded-xl border-black bg-gray-50 p-4"
-              >
-                {/* ORDER DETAILS */}
-                <div className="grow text-xl">
-                  <div>order Id: {order.id}</div>
-                  <div>created Time: {getTimeToString(order.createdTime)}</div>
-                  {order.employee && 
-                      <div key={order.employee.id}>
-                        <div>employee Id: {order.employee.id}</div>
-                      </div>
-                  }
-                  {order.customers && order.customers.elements.map((customer:CustomerType) => {
-                    return (
-                      <div key={customer.id}>customer id: {customer.id}</div>
-                    )
-                  })}
-                </div>
-
-                {/* SEE MORE BUTTON */}
-                <Link 
-                  key={`${index}-order-${order.id}`} 
-                  href={`/${mid}/order/${order.id}`}
-                  className="flex flex-col self-justify-end justify-center items-center w-40 text-md p-2 border border-black mb-2 rounded-xl"
-                >
-                  <div>VER MAS</div> 
-                  <div>SEE MORE</div> 
-                </Link>
-              </div>
-            )
-          })}
+        <OrderList mid={mid} query={queryVal}/>
         {/* <CustomerInfo mid={""} customerId={""}/> */}
       </div>
     </div>
   )
 }
-

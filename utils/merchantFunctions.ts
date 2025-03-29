@@ -3,6 +3,7 @@ import { ResponseCustomerById, ResponseLineItemsByOrderId, ResponseOrderById, Re
 
 const getTodayTimestamps = () => {
   const now = new Date();
+  now.setUTCHours(now.getUTCHours() - 7)
   now.setHours(0, 0, 0, 0); // Start of the day
   const startTime = now.getTime(); // Convert to milliseconds
 
@@ -12,7 +13,9 @@ const getTodayTimestamps = () => {
   return { startTime, endTime };
 };
 
-export const fetchOrdersByMid = async(mid: string):Promise<ResponseOrdersByMID | undefined> => {
+// export const getLocationNameByMid = async()
+
+export const fetchOrdersByMid = async(mid: string, query?: string):Promise<ResponseOrdersByMID | undefined> => {
   const { startTime, endTime } = getTodayTimestamps();
   const localCreds = LOCATION_CREDS[mid]
   // console.log('local: ', localCreds)
@@ -32,9 +35,18 @@ export const fetchOrdersByMid = async(mid: string):Promise<ResponseOrdersByMID |
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    
+    // DATA JSONIFIED
     let orderData = await response.json()
-    console.log('orders list: ', orderData)
+
+    console.log('QUERY VALUE: ', query)
+
+    if(query){
+      const matchedList = orderData.elements.filter((order:any) => order.id.includes(query))
+      console.log('matched lista', matchedList.length)
+      orderData.elements = matchedList
+    }
+    
+    console.log('orders list: ', orderData.elements.length)
     return orderData
 
   } catch (error) {
@@ -43,7 +55,7 @@ export const fetchOrdersByMid = async(mid: string):Promise<ResponseOrdersByMID |
 }
 
 
-export const fetchOrderById = async(mid: string, orderId: string, query?: string): Promise<ResponseOrderById | undefined> => {
+export const fetchOrderById = async(mid: string, orderId: string): Promise<ResponseOrderById | undefined> => {
   const localCreds = LOCATION_CREDS[mid]
   const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${mid}/orders/${orderId}`
 
@@ -63,11 +75,11 @@ export const fetchOrderById = async(mid: string, orderId: string, query?: string
     // console.log('order data: ', response)
     let orderData = await response.json()
 
-    if(query){
-      const matchedOrders = orderData.elements.filter((order:any) => order.id.includes(query))
-      console.log('MATCHED ORDERS')
-      orderData.elements = matchedOrders
-    }
+    // if(query !== ''){
+    //   const matchedOrders = orderData.elements.filter((order:any) => order.id.includes(query))
+    //   console.log('MATCHED ORDERS')
+    //   orderData.elements = matchedOrders
+    // }
 
     return orderData
 
