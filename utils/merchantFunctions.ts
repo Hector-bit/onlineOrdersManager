@@ -43,7 +43,7 @@ export const fetchOrdersByMid = async(mid: string):Promise<ResponseOrdersByMID |
 }
 
 
-export const fetchOrderById = async(mid: string, orderId: string): Promise<ResponseOrderById | undefined> => {
+export const fetchOrderById = async(mid: string, orderId: string, query?: string): Promise<ResponseOrderById | undefined> => {
   const localCreds = LOCATION_CREDS[mid]
   const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${mid}/orders/${orderId}`
 
@@ -61,8 +61,13 @@ export const fetchOrderById = async(mid: string, orderId: string): Promise<Respo
     }
 
     // console.log('order data: ', response)
-
     let orderData = await response.json()
+
+    if(query){
+      const matchedOrders = orderData.elements.filter((order:any) => order.id.includes(query))
+      console.log('MATCHED ORDERS')
+      orderData.elements = matchedOrders
+    }
 
     return orderData
 

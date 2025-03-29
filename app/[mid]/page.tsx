@@ -13,25 +13,22 @@ export default async function midPage (props: { params: Promise<{mid: string}> }
   const localInfo = LOCATION_CREDS[mid]
   const orders = await fetchOrdersByMid(mid)
 
-  // if(orders.customers){
-  //   customer = await fetchCustomerInfoById(mid, orders.customers[0].id)
-  // }
-
-
   console.log('elements from orders data: ', orders)
-  // console.log('customers from order', customer)
-  
 
   return (
     <div className="flex flex-col gap-4">
-      <Link href={'/'} className="">
-        <div className="flex justify-center p-4 bg-gray-50 rounded-xl border border-black w-20">
-          Back
-        </div>
-      </Link>
+      <div className="flex flex-row justify-end">
+        <Link href={'/'} className="">
+          <div className="flex justify-center p-4 bg-gray-50 rounded-xl border border-black w-20">
+            Back
+          </div>
+        </Link>
+        
+      </div>
 
-      <div>Location name: {localInfo.LOCATIONNAME}</div>
+      <div className="text-xl font-bold">Location: {localInfo.LOCATIONNAME}</div>
 
+      {/* ORDER LIST */}
       <div className="flex flex-col gap-4">
           {orders && orders.elements.map((order, index: number) => {
             // const localOrders = order
