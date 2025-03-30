@@ -21,7 +21,7 @@ export const fetchOrdersByMid = async(mid: string, query?: string):Promise<Respo
   // console.log('local: ', localCreds)
 
   // const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders`
-  const requestUrlFiltered = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders?filter=createdTime>${startTime}&filter=createdTime<${endTime}`
+  const requestUrlFiltered = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders?filter=createdTime>${startTime}&filter=createdTime<${endTime}&filter=employee.id=${localCreds.EMPLOYEE}`
 
   try {
     const response = await fetch(requestUrlFiltered, {

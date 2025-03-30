@@ -11,30 +11,9 @@ export default async function midPage (props: { params: Promise<{mid: string }>,
   const mid = params.mid
   const queryVal = searchParams?.query || '';
 
-  // console.log('does it update here: ', queryVal)
-
-  //data to use
   const localInfo = LOCATION_CREDS[mid]
 
   const orders = await fetchOrdersByMid(mid, queryVal)
-
-  // const handleSearch = async(term:string) => {
-  //   clearTimeout(timer); // Clear previous timer
-  //   timer = setTimeout(() => func(...args), delay);
-  //   console.log(`Searching... ${term}`);
-   
-  //   // const params = new URLSearchParams(searchParams);
-  //   // params.set('page', '1')
-  //   // if (term) {
-  //   //   params.set('query', term);
-  //   // } else {
-  //   //   params.delete('query');
-  //   // }
-  //   // replace(`${pathname}?${params.toString()}`);
-  //   orders = await fetchOrdersByMid(mid)
-  // }, 300);
-
-  // orders = await fetchOrdersByMid(mid, query)
 
   console.log('elements from orders data: ', orders)
 
@@ -43,14 +22,14 @@ export default async function midPage (props: { params: Promise<{mid: string }>,
       <div className="flex flex-row justify-end">
         <Link href={'/'} className="">
           <div className="flex justify-center p-4 bg-gray-50 rounded-xl border border-black w-20">
-            Back
+            Atras
           </div>
         </Link>
         
       </div>
 
-      <div className="text-xl font-bold">Location: {localInfo.LOCATIONNAME}</div>
-      <div className="text-xl font-bold">Order List / Lista de Ordenes: {orders?.elements.length}</div>
+      <div className="text-xl font-bold">Ubicacion: {localInfo.LOCATIONNAME}</div>
+      <div className="text-xl font-bold">Ordenes en lista: {orders?.elements.length}</div>
 
       <Search query={"order id..."}/>
 
