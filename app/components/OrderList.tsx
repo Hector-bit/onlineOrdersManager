@@ -6,7 +6,7 @@ import { getTimeToString } from "@/utils/helperFunctions"
 const OrderList = async({mid, query}: {mid: string, query: string} ) => {
 
   console.log('CLIENT QUERY: ', query)
-  let orders = await fetchOrdersByMid(mid, query)
+  const orders = await fetchOrdersByMid(mid, query)
 
   return (
     <div className="flex flex-col gap-4">

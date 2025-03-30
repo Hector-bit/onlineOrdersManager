@@ -16,7 +16,7 @@ export default async function midPage (props: { params: Promise<{mid: string }>,
   //data to use
   const localInfo = LOCATION_CREDS[mid]
 
-  let orders = await fetchOrdersByMid(mid, queryVal)
+  const orders = await fetchOrdersByMid(mid, queryVal)
 
   // const handleSearch = async(term:string) => {
   //   clearTimeout(timer); // Clear previous timer
