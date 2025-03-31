@@ -32,8 +32,8 @@ export default async function orderPage (props: { params: Promise<{mid: string, 
     <div className="flex flex-col gap-4 text-xl">
 
       {/* BACK BUTTON */}
-      <Link href={`/${mid}`} className="">
-        <div className="flex justify-center p-4 bg-gray-50 rounded-xl border border-black w-20">Back | Atras</div>
+      <Link href={`/${mid}`} className="w-20 flex self-end justify-center p-4 bg-orange-500 rounded-xl border border-black">
+        <div className="text-white font-bold">Atras</div>
       </Link>
       <div className="text-lg font-bold">Merchant: {localInfo.LOCATIONNAME}</div>
 
@@ -60,7 +60,7 @@ export default async function orderPage (props: { params: Promise<{mid: string, 
       </div>
 
       {/* LINE ITEMS FOR ORDER */}
-      <div className="border-2 border-[#52B202] rounded-xl p-4">
+      <div className="border-2 border-orange-500 rounded-xl p-4">
         <div>LINE ITEMS : ORDEN DEL CLIENTE</div>
         <div className="flex flex-col gap-6">
           {lineItems?.elements.map((lineItem) => {

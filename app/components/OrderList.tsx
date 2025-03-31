@@ -38,10 +38,9 @@ const OrderList = async({mid, query}: {mid: string, query: string} ) => {
           <Link 
             key={`${index}-order-${order.id}`} 
             href={`/${mid}/order/${order.id}`}
-            className="flex flex-col self-justify-end justify-center items-center w-40 text-md p-2 border border-black mb-2 rounded-xl"
+            className="flex flex-col self-justify-end justify-center items-center w-40 bg-orange-500 p-2 border border-black rounded-xl"
           >
-            <div>VER MAS</div> 
-            <div>SEE MORE</div> 
+            <div className="text-white text-xl font-bold">VER MAS</div> 
           </Link>
         </div>
       )
