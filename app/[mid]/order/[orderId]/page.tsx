@@ -66,14 +66,15 @@ export default async function orderPage (props: { params: Promise<{mid: string, 
       <div className="">
         <div className="mt-4 font-bold">ORDEN DEL CLIENTE</div>
         <div className="my-2">Total: ${orderInfo.total / 100}</div>
-        <div className="flex flex-col gap-6 border-2 border-black bg-orange-400 rounded-xl p-4">
-          {lineItems?.elements.map((lineItem) => {
+        <div className="flex flex-col gap-6 rounded-xl">
+          {lineItems?.elements.map((lineItem, index: number) => {
 
             const food_item = getSvgFromLineItem(lineItem.name)
 
             return (
-              <div key={lineItem.id} className="flex flex-row justify-between divide-y-reverse border-black font-bold text-white">
+              <div key={lineItem.id} className="flex flex-row justify-between divide-y-reverse border-2 border-black bg-orange-400 font-bold text-white p-4 rounded-xl">
                 <div>
+                  <div>{index+1}</div>
                   <div>Order: {lineItem.name}</div>
                   <div>{lineItem?.note}</div>
                   <div>Price: ${lineItem.price ? (lineItem.price/100) : 'N/A'}</div>

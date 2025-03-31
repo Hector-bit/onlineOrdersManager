@@ -20,6 +20,7 @@ const OrderList = async({mid, query}: {mid: string, query: string} ) => {
         >
           {/* ORDER DETAILS */}
           <div className="grow ">
+            <div>{index+1}</div>
             <div>order Id: {order.id}</div>
             <div>created Time: {getTimeToString(order.createdTime)}</div>
             {order.employee && 
