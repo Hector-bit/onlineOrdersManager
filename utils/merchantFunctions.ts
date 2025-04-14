@@ -15,13 +15,14 @@ const getTodayTimestamps = () => {
 
 // export const getLocationNameByMid = async()
 
-export const fetchOrdersByMid = async(mid: string, query?: string):Promise<ResponseOrdersByMID | undefined> => {
+export const fetchOrdersByMid = async(mid: string, query?: string, employeeId?: string):Promise<ResponseOrdersByMID | undefined> => {
   const { startTime, endTime } = getTodayTimestamps();
   const localCreds = LOCATION_CREDS[mid]
   // console.log('local: ', localCreds)
 
   // const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders`
-  const requestUrlFiltered = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders?filter=createdTime>${startTime}&filter=createdTime<${endTime}&filter=employee.id=${localCreds.EMPLOYEE}`
+  const requestUrlFiltered = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders?filter=createdTime>${startTime}&filter=createdTime<${endTime}`
+  // const requestUrlFiltered = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders?employee.id=6ZB5DPFX21W7C`
 
   try {
     const response = await fetch(requestUrlFiltered, {
