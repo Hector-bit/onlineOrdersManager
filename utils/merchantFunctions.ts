@@ -40,10 +40,16 @@ export const fetchOrdersByMid = async(mid: string, orderId?: string, employeeId?
     // DATA JSONIFIED
     let orderData = await response.json()
 
-    console.log('orderId VALUE: ', orderId)
+    console.log('ORDER QUERIES: ', orderId, employeeId)
 
+    // filter by orderId and employeeId
     if(orderId){
       const matchedList = orderData.elements.filter((order:any) => order.id.includes(orderId))
+      // console.log('matched lista', matchedList.length)
+      orderData.elements = matchedList
+    }
+    if(employeeId){
+      const matchedList = orderData.elements.filter((order:any) => order.employee && order.employee.id === employeeId)
       // console.log('matched lista', matchedList.length)
       orderData.elements = matchedList
     }

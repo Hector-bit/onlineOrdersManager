@@ -4,14 +4,19 @@ import Link from "next/link";
 import Search from "../components/Search";
 import OrderList from "../components/OrderList";
 import SelectEmployee from "../components/SelectEmployee";
+import { getEmployees } from "../actions/employeeActions";
 // import SearchEmployeeId from "../components/SearchEmployeeId";
 
-export default async function midPage (props: { params: Promise<{mid: string }>, searchParams: Promise<{query?: string}> }) {
+export default async function midPage (props: { params: Promise<{mid: string }>, searchParams: Promise<{orderId?: string, employeeId: string}> }) {
   //my params
   const params = await props.params;
   const searchParams = await props.searchParams;
   const mid = params.mid
-  const orderIdQuery = searchParams?.query || '';
+
+  const employeeData = await getEmployees(mid);
+
+  const orderIdQuery = searchParams?.orderId || '';
+  const employeeIdQuery = searchParams?.employeeId || '';
 
   const localInfo = LOCATION_CREDS[mid]
 
@@ -33,12 +38,12 @@ export default async function midPage (props: { params: Promise<{mid: string }>,
       <div className="text-xl font-bold">Ubicacion: {localInfo.LOCATIONNAME}</div>
 
       <Search query={"order id..."}/>
-      {/* <SelectEmployee mid={mid} /> */}
+      <SelectEmployee employees={employeeData} />
       {/* <SearchEmployeeId query={"customer id..."}/> */}
 
       {/* ORDER LIST */}
       <div className="flex flex-col gap-4">
-        <OrderList mid={mid} orderIdQuery={orderIdQuery}/>
+        <OrderList mid={mid} orderIdQuery={orderIdQuery} employeeIdQuery={employeeIdQuery}/>
         {/* <CustomerInfo mid={""} customerId={""}/> */}
       </div>
     </div>

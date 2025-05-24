@@ -3,10 +3,10 @@ import { fetchOrdersByMid } from "@/utils/merchantFunctions"
 import { CustomerType } from "@/utils/merchantAPITypes"
 import { getTimeToString } from "@/utils/helperFunctions"
 
-const OrderList = async({mid, orderIdQuery}: {mid: string, orderIdQuery: string} ) => {
+const OrderList = async({mid, orderIdQuery, employeeIdQuery}: {mid: string, orderIdQuery: string, employeeIdQuery: string} ) => {
 
-  console.log('CLIENT QUERY: ', orderIdQuery)
-  const orders = await fetchOrdersByMid(mid, orderIdQuery)
+  // console.log('CLIENT QUERY: ', orderIdQuery)
+  const orders = await fetchOrdersByMid(mid, orderIdQuery, employeeIdQuery)
 
   return (
     <div className="flex flex-col gap-4">

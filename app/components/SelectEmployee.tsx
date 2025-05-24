@@ -1,7 +1,7 @@
 'use client';
 import React from "react";
 import { getEmployees } from "../actions/employeeActions";
-import { useDebouncedCallback } from "use-debounce";
+// import { useDebouncedCallback } from "use-debounce";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 // interface SelectEmployeeProps {
@@ -11,29 +11,28 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 //   label?: string;
 // }
 
-const SelectEmployee = async(props: {mid: string}) => {
-  const { mid } = props;
+const SelectEmployee = (props: {employees: any[]}) => {
+  const { employees } = props;
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const employeeData = await getEmployees(mid);
-  console.log('employeeData: ', employeeData);
+  // console.log('employeeData: ', employees);
 
-  const handleEmployeeSearch = useDebouncedCallback((term) => {
-    console.log(`Searching for employee... ${term}`);
+  const handleEmployeeSearch = (employeeId: string) => {
+    console.log(`Searching for employee... ${employeeId}`);
     
     const params = new URLSearchParams(searchParams);
-    if (term) {
-      params.set('employeeId', term);
+    if (employeeId) {
+      params.set('employeeId', employeeId);
     } else {
       params.delete('employeeId');
     }
     replace(`${pathname}?${params.toString()}`);
-  }, 300);
+  };
   
 
   return (
-    employeeData !== undefined ? (
+    employees !== undefined ? (
       <select
         className="block w-full rounded-md border border-gray-200 py-2 pl-3 pr-10 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
         defaultValue=""
@@ -45,7 +44,7 @@ const SelectEmployee = async(props: {mid: string}) => {
         <option value="" disabled>
           Select an employee
         </option>
-        {employeeData.elements.map((employee: any) => (
+        {employees.map((employee: any) => (
           <option key={employee.id} value={employee.id}>
             {employee.name}
           </option>

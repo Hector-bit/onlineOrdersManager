@@ -1,7 +1,8 @@
 'use server'
 import { LOCATION_CREDS } from "@/utils/merchantConstants";
+import { Employee } from "@/utils/types/employeeTypes";
 
-export const getEmployees = async (mid: string) => {
+export const getEmployees = async (mid: string): Promise<Employee[]> => {
   const localCreds = LOCATION_CREDS[mid];
   const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${mid}/employees`;
 
@@ -24,8 +25,9 @@ export const getEmployees = async (mid: string) => {
     //   employeeData.elements = employeeData.elements.filter((emp: any) => emp.id === employeeId);
     // }
 
-    return employeeData;
+    return employeeData.elements as Employee[];
   } catch (error) {
     console.error(`Error fetching employees: ${error}`);
+    return [];
   }
 }
