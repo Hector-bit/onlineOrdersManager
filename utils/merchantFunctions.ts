@@ -15,11 +15,11 @@ const getTodayTimestamps = () => {
 
 // export const getLocationNameByMid = async()
 
-export const fetchOrdersByMid = async(mid: string, query?: string, employeeId?: string):Promise<ResponseOrdersByMID | undefined> => {
+export const fetchOrdersByMid = async(mid: string, orderId?: string, employeeId?: string):Promise<ResponseOrdersByMID | undefined> => {
   const { startTime, endTime } = getTodayTimestamps();
   const localCreds = LOCATION_CREDS[mid]
-  console.log('local mid: ', mid)
-  console.log('local: ', localCreds)
+  // console.log('local mid: ', mid)
+  // console.log('local: ', localCreds)
 
   // const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders`
   const requestUrlFiltered = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders?filter=createdTime>${startTime}&filter=createdTime<${endTime}`
@@ -40,10 +40,10 @@ export const fetchOrdersByMid = async(mid: string, query?: string, employeeId?: 
     // DATA JSONIFIED
     let orderData = await response.json()
 
-    console.log('QUERY VALUE: ', query)
+    console.log('orderId VALUE: ', orderId)
 
-    if(query){
-      const matchedList = orderData.elements.filter((order:any) => order.id.includes(query))
+    if(orderId){
+      const matchedList = orderData.elements.filter((order:any) => order.id.includes(orderId))
       // console.log('matched lista', matchedList.length)
       orderData.elements = matchedList
     }

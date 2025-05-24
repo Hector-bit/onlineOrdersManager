@@ -11,13 +11,13 @@ export default async function midPage (props: { params: Promise<{mid: string }>,
   const params = await props.params;
   const searchParams = await props.searchParams;
   const mid = params.mid
-  const queryVal = searchParams?.query || '';
+  const orderIdQuery = searchParams?.query || '';
 
   const localInfo = LOCATION_CREDS[mid]
 
-  const orders = await fetchOrdersByMid(mid, queryVal)
+  // const orders = await fetchOrdersByMid(mid, orderIdQuery)
 
-  console.log('elements from orders data: ', orders)
+  // console.log('elements from orders data: ', orders)
 
   return (
     <div className="flex flex-col gap-4">
@@ -31,15 +31,14 @@ export default async function midPage (props: { params: Promise<{mid: string }>,
       </div>
 
       <div className="text-xl font-bold">Ubicacion: {localInfo.LOCATIONNAME}</div>
-      <div className="text-xl font-bold">Ordenes en lista: {orders?.elements.length}</div>
 
       <Search query={"order id..."}/>
-      <SelectEmployee mid={mid} />
+      {/* <SelectEmployee mid={mid} /> */}
       {/* <SearchEmployeeId query={"customer id..."}/> */}
 
       {/* ORDER LIST */}
       <div className="flex flex-col gap-4">
-        <OrderList mid={mid} query={queryVal}/>
+        <OrderList mid={mid} orderIdQuery={orderIdQuery}/>
         {/* <CustomerInfo mid={""} customerId={""}/> */}
       </div>
     </div>
