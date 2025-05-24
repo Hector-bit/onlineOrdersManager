@@ -3,6 +3,7 @@ import { fetchOrdersByMid } from "@/utils/merchantFunctions";
 import Link from "next/link";
 import Search from "../components/Search";
 import OrderList from "../components/OrderList";
+import SelectEmployee from "../components/SelectEmployee";
 // import SearchEmployeeId from "../components/SearchEmployeeId";
 
 export default async function midPage (props: { params: Promise<{mid: string }>, searchParams: Promise<{query?: string}> }) {
@@ -33,6 +34,7 @@ export default async function midPage (props: { params: Promise<{mid: string }>,
       <div className="text-xl font-bold">Ordenes en lista: {orders?.elements.length}</div>
 
       <Search query={"order id..."}/>
+      <SelectEmployee mid={mid} />
       {/* <SearchEmployeeId query={"customer id..."}/> */}
 
       {/* ORDER LIST */}

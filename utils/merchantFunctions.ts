@@ -18,7 +18,8 @@ const getTodayTimestamps = () => {
 export const fetchOrdersByMid = async(mid: string, query?: string, employeeId?: string):Promise<ResponseOrdersByMID | undefined> => {
   const { startTime, endTime } = getTodayTimestamps();
   const localCreds = LOCATION_CREDS[mid]
-  // console.log('local: ', localCreds)
+  console.log('local mid: ', mid)
+  console.log('local: ', localCreds)
 
   // const requestUrl = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders`
   const requestUrlFiltered = `${localCreds.APIROUTE}/v3/merchants/${localCreds.MID}/orders?filter=createdTime>${startTime}&filter=createdTime<${endTime}`
