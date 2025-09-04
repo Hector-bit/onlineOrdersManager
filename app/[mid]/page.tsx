@@ -26,10 +26,15 @@ export default async function midPage (props: { params: Promise<{mid: string }>,
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-row justify-end">
+      <div className="flex flex-row justify-end gap-3">
+        <Link href={`${mid}/inventory`} className="">
+          <div className="flex text-white  font-bold justify-center p-4 bg-gray-50 rounded-xl border border-black w-20 bg-orange-500">
+            Inventory
+          </div>
+        </Link>
         <Link href={'/'} className="">
           <div className="flex text-white  font-bold justify-center p-4 bg-gray-50 rounded-xl border border-black w-20 bg-orange-500">
-            Atras
+            Back
           </div>
         </Link>
         
