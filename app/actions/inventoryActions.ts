@@ -20,6 +20,7 @@ export const getInventory = async(LocationId: string) => {
   }
 
   const data = await response.json();
-  return data
+  console.log('inventory data: ', data);
+  return data.elements
 }
 
